@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+ <definitions 
+ xmlns="http://schemas.xmlsoap.org/wsdl/" 
+ xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" 
+ xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
+ xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" name="FlowerService" targetNamespace="http://service.flower.org/" xmlns:tns="http://service.flower.org/" xmlns:wsp="http://www.w3.org/ns/ws-policy" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:fi="http://java.sun.com/xml/ns/wsit/2006/09/policy/fastinfoset/service" xmlns:tcp="http://java.sun.com/xml/ns/wsit/2006/09/policy/soaptcp/service" xmlns:wsoma="http://schemas.xmlsoap.org/ws/2004/09/policy/optimizedmimeserialization" 
+ >
+    <message name="getFlower"/>
+    <message name="getFlowerResponse"/>
+    <message name="IOException"/>
+    <message name="getThumbnails"/>
+    <message name="getThumbnailsResponse"/>
+    <portType name="FlowerService">
+        <operation name="getFlower">
+            <input message="tns:getFlower"/>
+            <output message="tns:getFlowerResponse"/>
+            <fault name="IOException" message="tns:IOException"/>
+        </operation>
+        <operation name="getThumbnails">
+            <input message="tns:getThumbnails"/>
+            <output message="tns:getThumbnailsResponse"/>
+            <fault name="IOException" message="tns:IOException"/>
+        </operation>
+    </portType>
+    <binding name="FlowerServicePortBinding" type="tns:FlowerService">
+        <wsp:PolicyReference URI="#FlowerServicePortBindingPolicy"/>
+        <operation name="getFlower">
+            <input/>
+            <output/>
+            <fault name="IOException"/>
+        </operation>
+        <operation name="getThumbnails">
+            <input/>
+            <output/>
+            <fault name="IOException"/>
+        </operation>
+    </binding>
+    <service name="FlowerService">
+        <port name="FlowerServicePort" binding="tns:FlowerServicePortBinding"/>
+    </service>
+    <wsp:Policy wsu:Id="FlowerServicePortBindingPolicy">
+        <wsp:ExactlyOne>
+            <wsp:All>
+                <wsoma:OptimizedMimeSerialization/>
+            </wsp:All>
+        </wsp:ExactlyOne>
+    </wsp:Policy>
+</definitions>
